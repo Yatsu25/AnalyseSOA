@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- WSDL published by AnalyserChaineWS (JAX-WS RI 4.0.0), XSD inlined -->
+<definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://soap.insa.fr/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns="http://schemas.xmlsoap.org/wsdl/"
+             targetNamespace="http://soap.insa.fr/" name="analyzer">
+  <types>
+    <xsd:schema targetNamespace="http://soap.insa.fr/" version="1.0">
+      <xsd:element name="compare" type="tns:compare"/>
+      <xsd:element name="compareResponse" type="tns:compareResponse"/>
+      <xsd:complexType name="compare">
+        <xsd:sequence>
+          <xsd:element name="chain" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="compareResponse">
+        <xsd:sequence>
+          <xsd:element name="return" type="xsd:int"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </types>
+  <message name="compare">
+    <part name="parameters" element="tns:compare"/>
+  </message>
+  <message name="compareResponse">
+    <part name="parameters" element="tns:compareResponse"/>
+  </message>
+  <portType name="AnalyserChaineWS">
+    <operation name="compare">
+      <input wsam:Action="http://soap.insa.fr/AnalyserChaineWS/compareRequest" message="tns:compare"/>
+      <output wsam:Action="http://soap.insa.fr/AnalyserChaineWS/compareResponse" message="tns:compareResponse"/>
+    </operation>
+  </portType>
+  <binding name="AnalyserChaineWSPortBinding" type="tns:AnalyserChaineWS">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <operation name="compare">
+      <soap:operation soapAction=""/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+  </binding>
+  <service name="analyzer">
+    <port name="AnalyserChaineWSPort" binding="tns:AnalyserChaineWSPortBinding">
+      <soap:address location="http://localhost:8089/analyzer"/>
+    </port>
+  </service>
+</definitions>
